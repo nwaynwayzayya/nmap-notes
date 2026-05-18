@@ -6,8 +6,10 @@ Concise, practical notes and cheatsheets for learning Nmap (TryHackMe exercises 
 
 ## Contents
 
-- `01_Live Host Discovery.md` - host-discovery techniques and examples
 - `cheatsheet.md` - quick command reference for discovery scans
+- `01_Live Host Discovery.md` - host-discovery techniques and examples
+- `02_Nmap Basic Port Scans.md` - basic port scanning techniques and common flags
+- `03_Nmap Advanced Port Scans.md` - advanced port-scan techniques, verbosity and debugging
 
 ## Topics Covered
 

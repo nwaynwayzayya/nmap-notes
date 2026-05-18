@@ -35,3 +35,34 @@ nmap -n 10.10.0.0/24
 - Run scans with appropriate authorization and be aware of IDS/IPS alerts.
 
 ---
+
+## Port Scanning Cheatsheet
+
+A compact reference for common Nmap port-scanning commands and useful flags.
+
+| Purpose | Command | Notes |
+| --- | --- | --- |
+| TCP SYN (stealth) | `sudo nmap -sS <target>` | Fast; requires root/sudo |
+| TCP connect | `nmap -sT <target>` | Default for unprivileged users |
+| UDP scan | `sudo nmap -sU <target>` | Slow; results often `open|filtered` |
+| Scan specific ports | `nmap -p22,80,443 <target>` | Scan listed ports only |
+| Scan all ports | `nmap -p- <target>` | Enumerate all 65535 ports |
+| Top common ports | `nmap --top-ports 100 <target>` | Scan most likely ports quickly |
+| Verbosity | `-v` / `-vv` | More runtime detail/progress |
+| Reason | `--reason` | Show why Nmap classified results |
+| Debug | `-d` / `-dd` | Very verbose internal debug output |
+| Timing templates | `-T1` ... `-T5` | Stealthy (`-T1`) → aggressive (`-T5`)
+
+## Examples
+
+```bash
+sudo nmap -sS --reason -vv 10.10.252.27
+nmap -p22,80,443 --top-ports 100 10.10.252.27
+sudo nmap -sU -p53 10.10.252.27
+```
+
+## Quick tips
+
+- Combine `-sS -vv --reason` for informative, stealthy scans.
+- Use `-d` only when debugging scan behavior — output is very large.
+- Always scan only networks you are authorized to test.

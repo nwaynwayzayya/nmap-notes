@@ -132,11 +132,4 @@ By default, Nmap will attempt to resolve hostnames. You can control DNS behavior
 
 ---
 
-## References
-
-- Nmap man page: https://nmap.org/book/man.html
-- arp-scan: https://github.com/royhills/arp-scan
-
----
-
 
