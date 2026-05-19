@@ -66,3 +66,46 @@ sudo nmap -sU -p53 10.10.252.27
 - Combine `-sS -vv --reason` for informative, stealthy scans.
 - Use `-d` only when debugging scan behavior — output is very large.
 - Always scan only networks you are authorized to test.
+
+## Post-Port-Scan Cheatsheet
+
+| Purpose | Command | Notes |
+| --- | --- | --- |
+| Service/version detection | `nmap -sV <target>` | Fingerprint services and versions |
+| OS detection | `nmap -O <target>` | TCP/IP stack fingerprinting (requires privileges) |
+| Aggressive scan | `nmap -A <target>` | Combines `-sV -O -sC` and traceroute; noisy |
+| Default NSE scripts | `nmap -sC <target>` | Run safe, common scripts |
+| Run specific NSE script/category | `nmap --script <script-name> <target>` | e.g., `--script http-enum` or `--script vuln` |
+| Quick vuln checks | `nmap --script vuln <target>` | Rapid triage for known issues |
+| Traceroute | `nmap --traceroute <target>` | Map network path to target |
+
+## Examples
+
+```bash
+nmap -sV --script=vuln 10.10.252.27
+nmap -A 10.10.252.27
+nmap -sC --script=default 10.10.252.27
+```
+
+## Quick tips
+
+- Use `--script-help <script>` to inspect script options before running.
+- Prefer targeted NSE scripts for enumeration; avoid `vuln` or `intrusive` categories on production without permission.
+- Combine `-sV` with `--script` to gather version-aware script results.
+
+## Output Formats (quick reference)
+
+| Format | Command | Use |
+| --- | --- | --- |
+| Normal | `-oN scan.nmap` | Human-readable output (same as terminal) |
+| Grepable | `-oG scan.gnmap` | Line-oriented for `grep`/quick filtering |
+| XML | `-oX scan.xml` | Structured output for automation/tools |
+| All formats | `-oA scan` | Saves `.nmap`, `.gnmap`, and `.xml` |
+| Script-kiddie | `-oS scan.kiddie` | Stylized/obfuscated output (not recommended) |
+
+## Example
+
+```bash
+nmap -sV --script=vuln -oA scan 10.10.252.27
+grep http scan.gnmap
+```
